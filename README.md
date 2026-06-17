@@ -1,15 +1,149 @@
-# nick-fields/assert-action
+# Assert Action
 
 Various assertions to aide in validating action outputs
 
-Hardened by [Chainguard](https://www.chainguard.dev) from the upstream action at [https://github.com/nick-fields/assert-action](https://github.com/nick-fields/assert-action).
+**NOTE:** Ownership of this project was transferred to my personal account `nick-fields` from my work account `nick-invision`.  Details [here](#Ownership)
 
-## Versions
+---
 
-| Version | Tag | Upstream commit |
-|---------|-----|-----------------|
-| v3.0.0 | [`v3.0.0`](https://github.com/chainguard-actions/nick-fields-assert-action/tree/v3.0.0) | [`22dd2a6`](https://github.com/nick-fields/assert-action/commit/22dd2a66ef733fe92022d3704183ac007463eecb) |
-| v3.0.1 | [`v3.0.1`](https://github.com/chainguard-actions/nick-fields-assert-action/tree/v3.0.1) | [`9d4e34b`](https://github.com/nick-fields/assert-action/commit/9d4e34b06ce426ffbec11d91e220b8a90fd36bdb) |
+## **Inputs**
+
+### **`expected`**
+
+**Required** Expected value
+
+### **`actual`**
+
+**Required** Actual value
+
+### **`comparison`**
+
+**Optional** Type of comparison to perform. Supports `exact` (default), `startsWith`, `endsWith`, `contains`, `notEqual`, `notStartsWith`, `notEndsWith`, `notContains`
+
+---
+
+## **Outputs**
+
+### **`result`**
+
+Result of the comparison. Can be either passed or failed
+
+---
+
+## **Examples**
+
+### Example usage w/ exact (using default comparison) assertion
+
+```yaml
+- id: test-data
+  run: echo "value=testing" >> $GITHUB_OUTPUT
+- uses: nick-fields/assert-action@v4
+  with:
+    expected: testing
+    actual: ${{ steps.test-data.outputs.value }}
+```
+
+### Example usage w/ exact assertion
+
+```yaml
+- id: test-data
+  run: echo "value=testing" >> $GITHUB_OUTPUT
+- uses: nick-fields/assert-action@v4
+  with:
+    expected: testing
+    actual: ${{ steps.test-data.outputs.value }}
+    comparison: exact
+```
+
+### Example usage w/ startsWith assertion
+
+```yaml
+- id: test-data
+  run: echo "value=testing" >> $GITHUB_OUTPUT
+- uses: nick-fields/assert-action@v4
+  with:
+    expected: test
+    actual: ${{ steps.test-data.outputs.value }}
+    comparison: startsWith
+```
+
+### Example usage w/ notStartsWith assertion
+
+```yaml
+- id: test-data
+  run: echo "value=testing" >> $GITHUB_OUTPUT
+- uses: nick-fields/assert-action@v4
+  with:
+    expected: abc
+    actual: ${{ steps.test-data.outputs.value }}
+    comparison: notStartsWith
+```
+
+### Example usage w/ endsWith assertion
+
+```yaml
+- id: test-data
+  run: echo "value=testing" >> $GITHUB_OUTPUT
+- uses: nick-fields/assert-action@v4
+  with:
+    expected: ing
+    actual: ${{ steps.test-data.outputs.value }}
+    comparison: endsWith
+```
+
+### Example usage w/ notEndsWith assertion
+
+```yaml
+- id: test-data
+  run: echo "value=testing" >> $GITHUB_OUTPUT
+- uses: nick-fields/assert-action@v4
+  with:
+    expected: abc
+    actual: ${{ steps.test-data.outputs.value }}
+    comparison: notEndsWith
+```
+
+### Example usage w/ contains assertion
+
+```yaml
+- id: test-data
+  run: echo "value=testing" >> $GITHUB_OUTPUT
+- uses: nick-fields/assert-action@v4
+  with:
+    expected: est
+    actual: ${{ steps.test-data.outputs.value }}
+    comparison: endsWith
+```
+
+### Example usage w/ notContains assertion
+
+```yaml
+- id: test-data
+  run: echo "value=testing" >> $GITHUB_OUTPUT
+- uses: nick-fields/assert-action@v4
+  with:
+    expected: abc
+    actual: ${{ steps.test-data.outputs.value }}
+    comparison: notContains
+```
+
+### Example usage w/ notEqual assertion
+
+```yaml
+- id: test-data
+  run: echo "value=testing" >> $GITHUB_OUTPUT
+- uses: nick-fields/assert-action@v4
+  with:
+    expected: abc
+    actual: ${{ steps.test-data.outputs.value }}
+    comparison: notEqual
+```
+
+---
+
+## **Limitations**
+
+- If running on self-hosted runner, NodeJS must be installed.
 
 ## Privacy
 

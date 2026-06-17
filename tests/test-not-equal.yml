@@ -1,0 +1,24 @@
+name: Test notEqual comparison
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+        with:
+          expected: goodbye
+          actual: hello-world
+          comparison: notEqual
+      - name: Assert result is passed
+        env:
+          ACTUAL: ${{ steps.action.outputs.result }}
+        run: |
+          echo "actual: $ACTUAL"
+          if [ "$ACTUAL" != "passed" ]; then
+            echo "FAIL: expected 'passed' but got '$ACTUAL'"
+            exit 1
+          fi
+          echo "PASS"
