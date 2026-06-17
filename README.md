@@ -9,6 +9,7 @@ Hardened by [Chainguard](https://www.chainguard.dev) from the upstream action at
 | Version | Tag | Upstream commit |
 |---------|-----|-----------------|
 | v3.0.0 | [`v3.0.0`](https://github.com/chainguard-actions/nick-fields-assert-action/tree/v3.0.0) | [`22dd2a6`](https://github.com/nick-fields/assert-action/commit/22dd2a66ef733fe92022d3704183ac007463eecb) |
+| v3.0.1 | [`v3.0.1`](https://github.com/chainguard-actions/nick-fields-assert-action/tree/v3.0.1) | [`9d4e34b`](https://github.com/nick-fields/assert-action/commit/9d4e34b06ce426ffbec11d91e220b8a90fd36bdb) |
 
 ## Privacy
 
