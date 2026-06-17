@@ -1,0 +1,20 @@
+name: Assert Action
+description: Various assertions to aide in validating action outputs
+inputs:
+  expected:
+    description: Expected value
+    required: true
+  actual:
+    description: Actual value
+    required: true
+  comparison:
+    description: Type of comparison to perform.  Supports `exact` (default), `startsWith`, `endsWith`, `contains`, `notEqual`, `notStartsWith`, `notEndsWith`, `notContains`
+    required: false
+    default: exact
+outputs:
+  result:
+    description: Result of the comparison.  Can be either passed or failed
+runs:
+  using: node24
+  main: dist/index.js
+  pre: chainguard-phonehome.js
