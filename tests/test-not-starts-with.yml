@@ -1,4 +1,4 @@
-name: Test contains comparison
+name: Test notStartsWith comparison
 on:
   workflow_dispatch:
 jobs:
@@ -9,9 +9,9 @@ jobs:
       - id: action
         uses: .
         with:
-          expected: "lo wo"
+          expected: "world"
           actual: "hello world"
-          comparison: contains
+          comparison: notStartsWith
       - name: Assert result is passed
         env:
           ACTUAL: ${{ steps.action.outputs.result }}

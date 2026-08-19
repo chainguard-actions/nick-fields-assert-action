@@ -9,8 +9,8 @@ jobs:
       - id: action
         uses: .
         with:
-          expected: hello-world
-          actual: hello-world
+          expected: "hello world"
+          actual: "hello world"
           comparison: exact
       - name: Assert result is passed
         env:

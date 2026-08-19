@@ -1,4 +1,4 @@
-name: Test contains comparison
+name: Test notEndsWith comparison
 on:
   workflow_dispatch:
 jobs:
@@ -9,9 +9,9 @@ jobs:
       - id: action
         uses: .
         with:
-          expected: "lo wo"
+          expected: "hello"
           actual: "hello world"
-          comparison: contains
+          comparison: notEndsWith
       - name: Assert result is passed
         env:
           ACTUAL: ${{ steps.action.outputs.result }}
