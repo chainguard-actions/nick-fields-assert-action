@@ -1,0 +1,116 @@
+name: Test negative comparisons (notStartsWith, notEndsWith, notContains)
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      # notStartsWith - passes when actual does NOT start with expected
+      - id: not-starts-pass
+        uses: .
+        with:
+          expected: "world"
+          actual: "hello world"
+          comparison: notStartsWith
+      - name: Assert notStartsWith passes when actual does not start with expected
+        env:
+          ACTUAL: ${{ steps.not-starts-pass.outputs.result }}
+        run: |
+          echo "actual: $ACTUAL"
+          if [ "$ACTUAL" != "passed" ]; then
+            echo "FAIL: expected 'passed' but got '$ACTUAL'"
+            exit 1
+          fi
+          echo "PASS"
+
+      - id: not-starts-fail
+        uses: .
+        with:
+          expected: "hello"
+          actual: "hello world"
+          comparison: notStartsWith
+        continue-on-error: true
+      - name: Assert notStartsWith fails when actual starts with expected
+        env:
+          ACTUAL: ${{ steps.not-starts-fail.outputs.result }}
+        run: |
+          echo "actual: $ACTUAL"
+          if [ "$ACTUAL" != "failed" ]; then
+            echo "FAIL: expected 'failed' but got '$ACTUAL'"
+            exit 1
+          fi
+          echo "PASS"
+
+      # notEndsWith - passes when actual does NOT end with expected
+      - id: not-ends-pass
+        uses: .
+        with:
+          expected: "hello"
+          actual: "hello world"
+          comparison: notEndsWith
+      - name: Assert notEndsWith passes when actual does not end with expected
+        env:
+          ACTUAL: ${{ steps.not-ends-pass.outputs.result }}
+        run: |
+          echo "actual: $ACTUAL"
+          if [ "$ACTUAL" != "passed" ]; then
+            echo "FAIL: expected 'passed' but got '$ACTUAL'"
+            exit 1
+          fi
+          echo "PASS"
+
+      - id: not-ends-fail
+        uses: .
+        with:
+          expected: "world"
+          actual: "hello world"
+          comparison: notEndsWith
+        continue-on-error: true
+      - name: Assert notEndsWith fails when actual ends with expected
+        env:
+          ACTUAL: ${{ steps.not-ends-fail.outputs.result }}
+        run: |
+          echo "actual: $ACTUAL"
+          if [ "$ACTUAL" != "failed" ]; then
+            echo "FAIL: expected 'failed' but got '$ACTUAL'"
+            exit 1
+          fi
+          echo "PASS"
+
+      # notContains - passes when actual does NOT contain expected
+      - id: not-contains-pass
+        uses: .
+        with:
+          expected: "xyz"
+          actual: "hello world"
+          comparison: notContains
+      - name: Assert notContains passes when actual does not contain expected
+        env:
+          ACTUAL: ${{ steps.not-contains-pass.outputs.result }}
+        run: |
+          echo "actual: $ACTUAL"
+          if [ "$ACTUAL" != "passed" ]; then
+            echo "FAIL: expected 'passed' but got '$ACTUAL'"
+            exit 1
+          fi
+          echo "PASS"
+
+      - id: not-contains-fail
+        uses: .
+        with:
+          expected: "lo wo"
+          actual: "hello world"
+          comparison: notContains
+        continue-on-error: true
+      - name: Assert notContains fails when actual contains expected
+        env:
+          ACTUAL: ${{ steps.not-contains-fail.outputs.result }}
+        run: |
+          echo "actual: $ACTUAL"
+          if [ "$ACTUAL" != "failed" ]; then
+            echo "FAIL: expected 'failed' but got '$ACTUAL'"
+            exit 1
+          fi
+          echo "PASS"

@@ -9,9 +9,8 @@ jobs:
       - id: action
         uses: .
         with:
-          expected: hello-world
-          actual: hello-world
-          comparison: exact
+          expected: "hello world"
+          actual: "hello world"
       - name: Assert result is passed
         env:
           ACTUAL: ${{ steps.action.outputs.result }}

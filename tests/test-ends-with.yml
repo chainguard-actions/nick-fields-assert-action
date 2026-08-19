@@ -6,19 +6,36 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-      - id: action
+      - id: action-pass
         uses: .
         with:
-          expected: world
-          actual: hello-world
+          expected: "world"
+          actual: "hello world"
           comparison: endsWith
-      - name: Assert result is passed
+      - name: Assert endsWith passes when actual ends with expected
         env:
-          ACTUAL: ${{ steps.action.outputs.result }}
+          ACTUAL: ${{ steps.action-pass.outputs.result }}
         run: |
           echo "actual: $ACTUAL"
           if [ "$ACTUAL" != "passed" ]; then
             echo "FAIL: expected 'passed' but got '$ACTUAL'"
+            exit 1
+          fi
+          echo "PASS"
+      - id: action-fail
+        uses: .
+        with:
+          expected: "hello"
+          actual: "hello world"
+          comparison: endsWith
+        continue-on-error: true
+      - name: Assert endsWith fails when actual does not end with expected
+        env:
+          ACTUAL: ${{ steps.action-fail.outputs.result }}
+        run: |
+          echo "actual: $ACTUAL"
+          if [ "$ACTUAL" != "failed" ]; then
+            echo "FAIL: expected 'failed' but got '$ACTUAL'"
             exit 1
           fi
           echo "PASS"
