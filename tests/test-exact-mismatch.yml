@@ -1,4 +1,4 @@
-name: Test exact match mismatch produces failed result
+name: Test exact match mismatch
 on:
   workflow_dispatch:
 jobs:
@@ -9,8 +9,8 @@ jobs:
       - id: action
         uses: .
         with:
-          expected: hello
-          actual: world
+          expected: "hello"
+          actual: "world"
           comparison: exact
         continue-on-error: true
       - name: Assert result is failed

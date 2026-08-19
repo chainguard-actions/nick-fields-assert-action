@@ -1,4 +1,4 @@
-name: Test notEqual comparison
+name: Test notEndsWith comparison
 on:
   workflow_dispatch:
 jobs:
@@ -10,9 +10,9 @@ jobs:
         uses: .
         with:
           expected: "hello"
-          actual: "world"
-          comparison: notEqual
-      - name: Assert notEqual passes when values differ
+          actual: "hello world"
+          comparison: notEndsWith
+      - name: Assert notEndsWith passes when actual does not end with expected
         env:
           ACTUAL: ${{ steps.action-pass.outputs.result }}
         run: |
@@ -25,11 +25,11 @@ jobs:
       - id: action-fail
         uses: .
         with:
-          expected: "same"
-          actual: "same"
-          comparison: notEqual
+          expected: "world"
+          actual: "hello world"
+          comparison: notEndsWith
         continue-on-error: true
-      - name: Assert notEqual fails when values are equal
+      - name: Assert notEndsWith fails when actual ends with expected
         env:
           ACTUAL: ${{ steps.action-fail.outputs.result }}
         run: |

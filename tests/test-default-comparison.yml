@@ -9,9 +9,9 @@ jobs:
       - id: action
         uses: .
         with:
-          expected: foobar
-          actual: foobar
-      - name: Assert result is passed with default exact comparison
+          expected: "default-test"
+          actual: "default-test"
+      - name: Assert default comparison behaves as exact match
         env:
           ACTUAL: ${{ steps.action.outputs.result }}
         run: |
